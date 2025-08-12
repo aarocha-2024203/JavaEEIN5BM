@@ -1,4 +1,4 @@
-package com.kinalitosclothes.controlador;
+package Controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,13 +6,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.kinalitosclothes.modelo.EmpleadosDAO;
+import com.kinalitosclothes.modelo.Empleados;
 /**
  *
  * @author informatica
  */
 public class Validar extends HttpServlet {
-
+    EmpleadosDAO empleadosDAO = new EmpleadosDAO();
+    Empleados empleados = new Empleados();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +67,21 @@ public class Validar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String accion = request.getParameter("accion");
+        if (accion.equalsIgnoreCase("Ingresar")){
+            String user = request.getParameter("txtUsuario");
+            String pass = request.getParameter("txtPass");
+            empleados = empleadosDAO.validar(user, pass);
+            if(empleados.getNombreEmpleado()!=null){
+                request.setAttribute("usuario", empleados);
+                request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response);
+                
+            }else{
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }else{
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     /**
