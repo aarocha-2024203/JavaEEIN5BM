@@ -4,11 +4,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta https-equiv=" X-UA-Compatible" content="IE-edge">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD_Producto</title>
+    <title>CRUD_Pedido</title>
     <link rel="icon" type="image/x-icon" href="../Images/Logo_K.C.png">
-    <link rel="stylesheet" href="../Styles/vistapedidoadmin.css">
+    <link rel="stylesheet" href="../Styles/vistaproductoadmin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -26,191 +26,113 @@
         <div class="container">
             <h1>Bienvenido al CRUD completo de la entidad <b>Pedidos</b></h1>
 
-            <!--apartado para crear el pedido-->
+            <!-- Formulario agregar/actualizar -->
             <div class="section">
-                <h2>Agregar nuevo pedido</h2>
+                <h2>Agregar o actualizar pedido</h2>
                 <form>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="time" class="entrada_texto"  id="txtHoraPedido" required>
-                            <label class="label-input-time ">Hora del Pedido</label>
+                            <input type="time" class="entrada_texto" id="txtHoraPedido" required>
+                            <label class="label-input">Hora del Pedido</label>
                         </div>
                         <div class="form-group">
                             <input type="date" class="entrada_texto" id="txtFechaPedido" required>
-                            <label class="label-input-date">Fecha del Pedido</label>
+                            <label class="label-input">Fecha del Pedido</label>
                         </div>
                         <div class="form-group">
-                            <select class="entrada_texto" id="chbEstPedido">
-                                <option value="" disabled selected></option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="enviado">Enviado</option>
-                                <option value="entregado">Entregado</option>
-                                <label class="label-input-select" for="status">Estado del pedido</label>
-                                <span class="select-arrow">▼</span>
+                            <select class="entrada_texto" id="chbEstPedido" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Enviado">Enviado</option>
+                                <option value="Entregado">Entregado</option>
                             </select>
+                            <label class="label-input">Estado del Pedido</label>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="entrada_texto" id="txtTotalPedido" placeholder="0" required>
+                            <input type="number" class="entrada_texto" id="txtTotalPedido" step="0.01" min="0" placeholder="0.00" required>
                             <label class="label-input-number">Total</label>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtClientePedido" name="stock" min="0" placeholder="0" required>
-                            <label class="label-input-number">Codigo del Cliente</label>
+                            <input type="number" class="entrada_texto" id="txtClientePedido" min="0" placeholder="0" required>
+                            <label class="label-input-number">Código del Cliente</label>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtMetPagoPedido" name="stock" min="0" placeholder="0" required>
-                            <label class="label-input-number">Codigo del Metodo de Pago</label>
+                            <input type="number" class="entrada_texto" id="txtMetPagoPedido" min="0" placeholder="0" required>
+                            <label class="label-input-number">Código del Método de Pago</label>
                         </div>
                     </div>
-                    <button type="button" class="btn_crear_producto" id="btnAgregarPedido">
-                        <span class="bnt_texto">Crear Pedido</span>
-                        <span class="btn_icono">
-                            <i class="fa-solid fa-plus"></i>
-                        </span>
-                    </button>
+                    <div class="form-row">
+                        <button type="button" class="btn_crear_producto">
+                            <span class="bnt_texto">Crear Pedido</span>
+                            <span class="btn_icono">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+                        </button>
+                        <button type="button" class="btn_actualizar">
+                            <span class="bnt_texto">Actualizar</span>
+                            <span class="btn_icono">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </span>
+                        </button>
+                    </div>
                 </form>
             </div>
 
-            <!-- el buscar y listar -->
+            <!-- Lista -->
             <div class="section">
-                <h2>Listar y buscar pedidos</h2>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtBuscarPedidos" name="id" min="1" placeholder="0" required>
-                            <label class="label-input-number">ID del pedido a buscar</label>
-                        </div>
-                    </div>
-                    <button type="button" class="btn_buscar" id="btnBuscarPedido">
-                        <span class="bnt_texto">Buscar Pedidos</span>
-                        <span class="btn_icono">
-                            <i class="fa fa-search"></i></i>
-                        </span>
-                    </button>
-                </form>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Codigo del Pedido</th>
-                            <th>Hora del Pedido</th>
-                            <th>Fecha del Pedido</th>
-                            <th>Estado del Pedido</th>
-                            <th>Tota</th>
-                            <th>Codigo del Cliente</th>
-                            <th>Codigo del Metodo de Pago</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Pantalon Campana</td>
-                            <td>Pantalon tonos azules</td>
-                            <td>Q 250.00</td>
-                            <td>5</td>
-                            <td>1</td>
-                            <td>2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- el actualizar pedido -->
-            <div class="section">
-                <h2>Actualizar pedidos</h2>
-                <form class="ingresar_id_act_producto">
-                    <div class="form-group">
-                        <input type="number" class="entrada_texto" id="txtIdPedidos" name="id" min="1" placeholder="0" required>
-                        <label class="label-input-number">ID del pedido a editar:</label>
-                    </div>
-                    <button type="button" class="btn_buscar" id="btnEditarPedido">
-                        <span class="bnt_texto">Buscar Pedido</span>
-                        <span class="btn_icono">
-                            <i class="fa fa-search"></i></i>
-                        </span>
-                    </button>
-                </form>
-
-                <form class="form_datos_actualizar_producto">
-                    <input type="hidden" name="_method" value="PUT">
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="time" class="entrada_texto" id="txtHoraEditar" required>
-                            <label class="label-input-time">Hora del Pedido</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="date" class="entrada_texto" id="txtFechaEditar" required>
-                            <label class="label-input-date">Fecha del Pedido</label>
-                        </div>
-                        <div class="form-group">
-                            <select class="entrada_texto" id="chbEstEditar">
-                                <option value="" disabled selected></option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="enviado">Enviado</option>
-                                <option value="entregado">Entregado</option>
-                                <label class="label-input-select" for="status">Estado del pedido</label>
-                                <span class="select-arrow">▼</span>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtTotalEditar" name="stock" min="0" placeholder="0" required>
-                            <label class="label-input-number">Total</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtCliPedidoEditar" name="stock" min="0" placeholder="0" required>
-                            <label class="label-input-number">Codigo del Cliente</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtMetPagoEditar" name="stock" min="0" placeholder="0" required>
-                            <label class="label-input-number">Codigo del Metodo de Pago</label>
-                        </div>
-                    </div>
-                    <button type="button" class="btn_editar" id="btnEditarPedido">
-                        <span class="bnt_texto">Actualizar</span>
-                        <span class="btn_icono">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </span>
-                    </button>
-                </form>
-            </div>
-
-            <!-- eliminar el pedido -->
-            <div class="section">
-                <h2> Eliminar pedidos</h2>
-                <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="number" class="entrada_texto" id="txtEliminarPedido" name="id" min="1" placeholder="0" required>
-                            <label class="label-input-number">ID del pedido a eliminar</label>
-                        </div>
-                    </div>
-                </form>
-                <form class="form_btn_eliminar_buscar">
-                    <button type="button" class="btn_buscar" id="btnBuscarEliminar">
-                        <span class="bnt_texto">Buscar Pedidos</span>
-                        <span class="btn_icono">
-                            <i class="fa fa-search"></i></i>
-                        </span>
-                    </button>
-
-                    <button type="button" class="btn_eliminar" id="btnEliminarPedido">
-                        <span class="bnt_texto">Eliminar Pedido</span>
-                        <span class="btn_icono">
-                            <i class="fa fa-trash"></i></i>
-                        </span>
-                    </button>
-                </form>
+                <h2>Lista</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código del Pedido</th>
+                                <th>Hora</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Total</th>
+                                <th>Código Cliente</th>
+                                <th>Código Método Pago</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>10:30</td>
+                                <td>2025-07-21</td>
+                                <td>Pendiente</td>
+                                <td>Q 250.00</td>
+                                <td>5</td>
+                                <td>2</td>
+                                <td>
+                                    <div class="botonesTabla">
+                                        <button type="button" class="btn_editar" id="btnEditarRegistro">
+                                            <span class="bnt_texto">Editar</span>
+                                            <span class="btn_icono">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                        </button>
+                                        <button type="button" class="btn_eliminar" id="btnEliminarRegistro">
+                                            <span class="bnt_texto">Eliminar</span>
+                                            <span class="btn_icono">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <form class="mensaje_eliminar">
                     <input type="hidden">
                     <div class="message warning">
                         <i class="fa fa-exclamation-triangle"></i>
-                        <strong>¡Atención!</strong> Recuerda que vas a eliminar un registro si lo haces se borrara de
-                        forma permanente lo que quiere decir que ya nunca lo recuperaras
+                        <strong>¡Atención!</strong> Recuerda que vas a eliminar un registro, si lo haces se borrará de forma permanente y no se podrá recuperar.
                     </div>
                 </form>
             </div>
         </div>
     </section>
 </body>
-
 </html>

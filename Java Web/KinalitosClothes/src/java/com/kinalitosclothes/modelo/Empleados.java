@@ -20,10 +20,8 @@ public class Empleados {
         this.telefonoEmpleado = telefonoEmpleado;
         this.direccionEmpleado = direccionEmpleado;
         this.codigoUsuario = codigoUsuario;
-        
     }
 
-    // Getters y Setters
     public int getCodigoEmpleado() {
         return codigoEmpleado;
     }
@@ -77,7 +75,6 @@ public class Empleados {
     }
 
     public void setCodigoUsuario(int codigoUsuario) {
-         this.codigoUsuario = codigoUsuario;
+        this.codigoUsuario = codigoUsuario;
     }
-       
 }

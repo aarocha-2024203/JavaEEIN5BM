@@ -1,43 +1,40 @@
 package com.kinalitosclothes.modelo;
-
+ 
 import com.kinalitosclothes.config.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
+ 
 public class EmpleadosDAO {
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    int resp;
-    
-    public Empleados validar(String NombreEmpleado, String CodigoUsuario){
-        Empleados empleados = new Empleados();
-        String sql = "select * from Empleados where nombreEmpleado = ? and codigoUsuario = ?";
-        try{
+ 
+    public Empleados validar(String usuario, String contrasena) {
+        Empleados empleado = null;
+      String sql = "SELECT * FROM empleados WHERE usuario = ? AND contrasena = ?";
+        try {
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
-            ps.setString(1, NombreEmpleado);
-            ps.setString(2, CodigoUsuario);
+            ps = con.prepareStatement(sql);
+            ps.setString(1, usuario);
+            ps.setString(2, contrasena);
             rs = ps.executeQuery();
-            while(rs.next()){
-                empleados.setNombreEmpleado(rs.getString("nombreEmpleado"));
-                empleados.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
-                empleados.setApellidoEmpleado(rs.getString("apellidoEmpleado"));
-                empleados.setCorreoEmpleado(rs.getString("correoEmpleado"));
-                empleados.setTelefonoEmpleado(rs.getString("telefonoEmpleado"));
-                empleados.setDireccionEmpleado(rs.getString("direccionEmpleado"));
-                empleados.setCodigoUsuario(rs.getInt("codigoUsuario"));
+            if (rs.next()) { 
+                empleado = new Empleados(); 
+                empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
+                empleado.setNombreEmpleado(rs.getString("nombreEmpleado"));
+                empleado.setApellidoEmpleado(rs.getString("apellidoEmpleado"));
+                empleado.setCorreoEmpleado(rs.getString("correoEmpleado"));
+                empleado.setTelefonoEmpleado(rs.getString("telefonoEmpleado"));
+                empleado.setDireccionEmpleado(rs.getString("direccionEmpleado"));
+                empleado.setCodigoUsuario(rs.getInt("codigoUsuario"));
             }
-        }catch (Exception e){
-            System.out.println("El usuario o contraseña son incorrectos");
-            
+        } catch (SQLException e) {
+            System.err.println("Error en la validación de credenciales: " + e.getMessage());
+            e.printStackTrace();
         }
-        return empleados;
-        
+        return empleado;
     }
-    
-    
-    
 }
